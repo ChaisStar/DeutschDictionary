@@ -18,7 +18,7 @@ namespace DeutschDictionary
             foreach (var word in data)
             {
                 var parts = splitter.SplitWord(word);
-                Console.WriteLine($"(in) {word} -> (out) {string.Join(", ", parts)}");
+                Console.WriteLine($"(in) {word} -> (out) {(parts.Any() ? string.Join(", ", parts.Distinct()) : word)}");
             }
 
             Console.ReadKey();
