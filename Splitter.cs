@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace DeutschDictionary
@@ -13,9 +12,9 @@ namespace DeutschDictionary
             _dictionary = dictionary;
         }
 
-        public IEnumerable<string> SplitWord(string word)
+        public IEnumerable<IEnumerable<string>> SplitWord(string word)
         {
-            var result = new List<string>();
+            var result = new List<List<string>>();
 
             for (var length = 1; length < word.Length; length++)
             {
@@ -27,13 +26,16 @@ namespace DeutschDictionary
 
                     if (splitted.Any())
                     {
-                        result.Add(part1);
-                        result.AddRange(splitted);
+                        foreach (var item in splitted)
+                        {
+                            var list = new List<string> { part1 };
+                            list.AddRange(item);
+                            result.Add(list);
+                        }
                     }
                     if (_dictionary.Contains(part2))
                     {
-                        result.Add(part1);
-                        result.Add(part2);
+                        result.Add(new List<string> { part1, part2 });
                     }
                 }
             }
